@@ -19,20 +19,19 @@ class _ProductCardState extends State<ProductCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 5,
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(10),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => ProductDetailsPage(product: widget.product),
-            ),
-          );
-        },
+    return InkWell(
+      borderRadius: BorderRadius.circular(10),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => ProductDetailsPage(product: widget.product),
+          ),
+        );
+      },
+      child: Card(
+        elevation: 4,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: Stack(
           children: [
             Padding(
@@ -44,6 +43,7 @@ class _ProductCardState extends State<ProductCard> {
                     height: 120,
                     width: double.infinity,
                     decoration: BoxDecoration(
+                      color: Colors.grey[200],
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Center(
@@ -61,6 +61,8 @@ class _ProductCardState extends State<ProductCard> {
                   Text(
                     widget.product.name,
                     textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -79,9 +81,11 @@ class _ProductCardState extends State<ProductCard> {
               ),
             ),
             Positioned(
-              top: 10,
-              right: 10,
+              bottom: 4,
+              right: 4,
               child: IconButton(
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
                 icon: Icon(
                   widget.product.isFavorite
                       ? Icons.favorite
