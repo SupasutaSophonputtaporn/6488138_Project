@@ -47,11 +47,11 @@ class _ProductCardState extends State<ProductCard> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Center(
-                      child: Text(
-                        widget.product.image,
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.asset(
+                          widget.product.image,
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
