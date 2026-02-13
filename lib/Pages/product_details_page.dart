@@ -22,9 +22,6 @@ class ProductDetailsPage extends StatelessWidget {
           children: [
             //Image Section
             ClipRRect(
-              borderRadius: const BorderRadius.vertical(
-                bottom: Radius.circular(30),
-              ),
               child: Image.asset(
                 product.image,
                 fit: BoxFit.contain,
