@@ -57,19 +57,16 @@ class _ProductCardState extends State<ProductCard> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Expanded(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(10),
-                          ),
+                        child: AspectRatio(
+                          aspectRatio: 2 / 3,
+
                           child: Image.asset(
                             widget.product.image,
-                            height: 450,
-                            fit: BoxFit.contain,
+                            fit: BoxFit.cover,
                             width: double.infinity,
                           ),
                         ),
                       ),
-
                       const SizedBox(height: 10),
 
                       Text(
