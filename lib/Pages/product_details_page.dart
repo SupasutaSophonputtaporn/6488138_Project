@@ -9,35 +9,103 @@ class ProductDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(title: Text(product.name)),
-      body: Padding(
-        padding: const EdgeInsetsGeometry.all(10),
+      backgroundColor: Colors.grey[100],
+
+      appBar: AppBar(
+        title: Text(product.name),
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.black,
+      ),
+      body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Image.asset(
-                  product.image,
-                  fit: BoxFit.cover,
-                  width: 200,
-                  height: 200,
-                ),
+            //Image Section
+            ClipRRect(
+              borderRadius: const BorderRadius.vertical(
+                bottom: Radius.circular(30),
+              ),
+              child: Image.asset(
+                product.image,
+                fit: BoxFit.contain,
+                width: double.infinity,
+                height: 300,
               ),
             ),
+
             const SizedBox(height: 20),
-            Text(
-              product.name,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            Text("Author: ${product.author}"),
-            const SizedBox(height: 10),
-            Text(product.description),
-            const SizedBox(height: 10),
-            Text(
-              "Price: ${product.price} baht",
-              style: const TextStyle(fontSize: 16),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //Title
+                  Text(
+                    product.name,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  //Author
+                  Text(
+                    "Author: ${product.author}",
+                    style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                  ),
+                  const SizedBox(height: 10),
+                  //Price
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12.0,
+                      vertical: 8.0,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Text(
+                      "${product.price} Baht",
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  //Description
+                  Text(
+                    product.description,
+                    style: const TextStyle(fontSize: 16, color: Colors.black54),
+                  ),
+
+                  const SizedBox(height: 30),
+
+                  // 🛒 Buy Button
+                  SizedBox(
+                    width: 250,
+                    height: 55,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      onPressed: () {},
+                      child: const Text(
+                        "Buy Now",
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+                ],
+              ),
             ),
           ],
         ),
