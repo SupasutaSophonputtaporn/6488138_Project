@@ -11,6 +11,7 @@ class ProductCard extends StatefulWidget {
 }
 
 class _ProductCardState extends State<ProductCard> {
+  bool isHovered = false;
   void toggleFavourite() {
     setState(() {
       widget.product.isFavorite = !widget.product.isFavorite;
@@ -19,83 +20,100 @@ class _ProductCardState extends State<ProductCard> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(10),
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => ProductDetailsPage(product: widget.product),
-          ),
-        );
+    return MouseRegion(
+      onEnter: (event) {
+        setState(() {
+          isHovered = true;
+        });
       },
-      child: Card(
-        elevation: 4,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        child: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 120,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Center(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.asset(
-                          widget.product.image,
-                          fit: BoxFit.cover,
+      onExit: (event) {
+        setState(() {
+          isHovered = false;
+        });
+      },
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        transform: Matrix4.identity()..translate(0, isHovered ? -10 : 0, 0),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(10),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => ProductDetailsPage(product: widget.product),
+              ),
+            );
+          },
+          child: Card(
+            elevation: 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(10),
+                          ),
+                          child: Image.asset(
+                            widget.product.image,
+                            height: 450,
+                            fit: BoxFit.contain,
+                            width: double.infinity,
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
 
-                  Text(
-                    widget.product.name,
-                    textAlign: TextAlign.center,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                      const SizedBox(height: 10),
+
+                      Text(
+                        widget.product.name,
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      Text(
+                        "${widget.product.price} Baht",
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 5),
-                  Text(
-                    "${widget.product.price} Baht",
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Positioned(
-              bottom: 4,
-              right: 4,
-              child: IconButton(
-                padding: EdgeInsets.zero,
-                constraints: const BoxConstraints(),
-                icon: Icon(
-                  widget.product.isFavorite
-                      ? Icons.favorite
-                      : Icons.favorite_border,
-                  color: widget.product.isFavorite ? Colors.red : Colors.grey,
                 ),
-                onPressed: toggleFavourite,
-              ),
+                Positioned(
+                  bottom: 4,
+                  right: 4,
+                  child: IconButton(
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
+                    icon: Icon(
+                      widget.product.isFavorite
+                          ? Icons.favorite
+                          : Icons.favorite_border,
+                      color: widget.product.isFavorite
+                          ? Colors.red
+                          : Colors.grey,
+                    ),
+                    onPressed: toggleFavourite,
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
